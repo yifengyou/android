@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - '.github/workflows/khadas-android13.yml'
   repository_dispatch:
   workflow_dispatch:
 
@@ -65,7 +67,7 @@ jobs:
           git config --global user.name yifengyou
           git config --global user.email 842056007@qq.com
 
-      - name: Clone target repository
+      - name: Repo sync
         working-directory: /builder
         id: clone
         run: |
@@ -110,7 +112,7 @@ jobs:
           df -h
           ls -alh ./*
 
-      - name: Upload Kernel to Release
+      - name: Upload to Release
         uses: ncipollo/release-action@main
         with:
           tag: khadas-android13
@@ -120,6 +122,12 @@ jobs:
           replacesArtifacts: true
           token: ${{ secrets.GITHUB_TOKEN }}
           body: | # khadas android13源码镜像
+
+            ## 解压方法
+
+            ```shell
+              cat khadas-android* | zstd -d --long=31 -T0 | tar -xf -
+            ```
 
             ## 免责声明
             - **按原样提供**：镜像不作任何保证，无任何担保，使用风险由用户自行承担
