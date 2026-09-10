@@ -82,7 +82,8 @@ jobs:
           MAX_RETRIES=30
           RETRY_COUNT=0
           while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-            .repo/repo/repo sync -v -c -j8 -n --no-tags --no-clone-bundle 2>&1 | tee -a /builder/khadas-android13.log
+            # only current-branch, 8job, only network, no-tags, no bundle
+            .repo/repo/repo sync -c -j8 -n --no-tags --no-clone-bundle
             if [ $? -eq 0 ];then
               break
             else
