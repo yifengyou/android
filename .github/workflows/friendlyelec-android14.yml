@@ -72,7 +72,18 @@ jobs:
         id: clone
         run: |
           set -x
-          git clone --depth 1 http://112.124.9.243:3000/friendlyelec/rk35xx-android14
+          MAX_RETRIES=30
+          RETRY_COUNT=0
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+            git clone --verbose --depth 1 http://112.124.9.243:3000/friendlyelec/rk35xx-android14
+            if [ $? -eq 0 ];then
+              break
+            else
+              RETRY_COUNT=$((RETRY_COUNT + 1))
+              ls -alh
+              df -h
+            fi
+          done
 
       - name: Create archive with split
         working-directory: /builder
