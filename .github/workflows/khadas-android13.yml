@@ -71,13 +71,15 @@ jobs:
         working-directory: /builder
         id: clone
         run: |
-          set -xe
+          set -x
           mkdir -p android13
           cd android13
           curl https://storage.googleapis.com/git-repo-downloads/repo > repo
           chmod a+x repo
           ls -alh repo
           ./repo init -u https://github.com/khadas/android_manifest.git -b khadas-edge2-android13
+          sed -i 's/fb77780d339ad7044ecb01be4b13271dc1a2be66/khadas-edge2-android13/g' .repo/manifests/default.xml
+          cat .repo/manifests/default.xml
           ls -alh
           MAX_RETRIES=30
           RETRY_COUNT=0

@@ -71,7 +71,7 @@ jobs:
         working-directory: /builder
         id: clone
         run: |
-          set -xe
+          set -x
           mkdir -p android12
           cd android12
           curl https://storage.googleapis.com/git-repo-downloads/repo > repo
